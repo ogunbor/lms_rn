@@ -31,7 +31,6 @@ const Home = () => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-
                     </View>
                     {/* end */}
                     <View className="flex-row items-center justify-between bg-[#280e4935] p-2 rounded-full">
@@ -42,7 +41,7 @@ const Home = () => {
                     </View>
                     <View className="bg-[#280e4935] p-2 rounded-[8px] mt-3 mb-3">
                         <View className="flex-row gap-2 items-center justify-between mb-3">
-                            <Text className="text-[17px] font-semibold mb-5">Trending Courses</Text>
+                            <Text className="text-[17px] font-semibold">Trending Courses</Text>
                             <View className="flex-row gap-2 items-center">
                                 <Text className="text-[15px] font-normal">See All</Text>
                                 <FontAwesome5 name="arrow-right" color={"#280e49"} size={15} />
@@ -84,7 +83,7 @@ const Home = () => {
 
                     <View className="bg-[#280e4935] p-2 rounded-[8px] mt-3 mb-3">
                         <View className="flex-row gap-2 items-center justify-between mb-3">
-                            <Text className="text-[17px] font-semibold mb-5">Popular Courses</Text>
+                            <Text className="text-[17px] font-semibold">Popular Courses</Text>
                             <View className="flex-row gap-2 items-center">
                                 <Text className="text-[15px] font-normal">See All</Text>
                                 <FontAwesome5 name="arrow-right" color={"#280e49"} size={15} />
@@ -133,6 +132,3 @@ const Home = () => {
 }
 
 export default Home
-
-
-
