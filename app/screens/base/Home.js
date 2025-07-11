@@ -16,7 +16,7 @@ const Home = () => {
                     <View className="bg-[#280e49] p-2 rounded-[8px] mb-3">
                         <View className="flex-row items-center justify-between">
                             <View className="flex-row items-center gap-2">
-                                <Image source={require('../../assets/images/handshake.jpg')} className="h-[40px] w-[40px] rounded-full" />
+                                <Image source={require('../../../assets/images/handshake.jpg')} className="h-[40px] w-[40px] rounded-full" />
                                 <View>
                                     <Text className="text-[15px] text-white font-normal">Hello 👋</Text>
                                     <Text className="text-[17px] text-white font-semibold">Jerry Charja</Text>
@@ -53,7 +53,7 @@ const Home = () => {
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                             {trendingCourses?.map((t, index) => (
                                 <View className="bg-white w-[300px] p-3 mr-2 rounded-md" key={index}>
-                                    <Image source={require('../../assets/images/handshake.jpg')} className="h-[200px] w-[300px] rounded-md object-cover" />
+                                    <Image source={require('../../../assets/images/handshake.jpg')} className="h-[200px] w-[300px] rounded-md object-cover" />
                                     <View>
                                         <Text className="text-[20px] text-[#280e49] font-semibold mt-2">Rust Crash Course</Text>
                                         <Text className="text-[15px] text-[#280e49] font-normal mt-1">Jeff Japajam</Text>
@@ -95,7 +95,7 @@ const Home = () => {
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                             {trendingCourses?.map((t, index) => (
                                 <View className="bg-white w-[300px] p-3 mr-2 rounded-md" key={index}>
-                                    <Image source={require('../../assets/images/handshake.jpg')} className="h-[200px] w-[300px] rounded-md object-cover" />
+                                    <Image source={require('../../../assets/images/handshake.jpg')} className="h-[200px] w-[300px] rounded-md object-cover" />
                                     <View>
                                         <Text className="text-[20px] text-[#280e49] font-semibold mt-2">Rust Crash Course</Text>
                                         <Text className="text-[15px] text-[#280e49] font-normal mt-1">Jeff Japajam</Text>
