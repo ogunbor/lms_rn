@@ -115,7 +115,7 @@ const Home = () => {
                                                 <TouchableOpacity onPress={() => router.push('/screens/base/CourseDetail')} className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
                                                     <Text className="text-white">View Course</Text>
                                                 </TouchableOpacity>
-                                                <TouchableOpacity className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
+                                                <TouchableOpacity onPress={() => router.push('/screens/base/Cart')} className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
                                                     <FontAwesome5 name="shopping-cart" color={"#fff"} size={15} />
                                                 </TouchableOpacity>
                                             </View>

@@ -4,6 +4,7 @@ import { List } from "react-native-paper";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import BottomScreenNavigation from "../partials/BottomScreenNavigation";
+import ScreenHeader from "../partials/ScreenHeader";
 
 const CourseDetail = () => {
     const [expanded, setExpanded] = useState(true);
@@ -11,20 +12,7 @@ const CourseDetail = () => {
     return (
         <View className="bg-white flex-1 px-3">
             <ScrollView vertical showsVerticalScrollIndicator={false} className="flex-1">
-                <View className="bg-[#280e49] p-2 rounded-[8px] mb-3">
-                    <View className="flex-row items-center justify-between bg-[#280e4935] gap-5">
-                        <TouchableOpacity className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center">
-                            <FontAwesome5 name="arrow-left" color={"#280e49"} size={15} />
-                        </TouchableOpacity>
-                        <View>
-                            <Text className="text-white text-[17px] font-semibold text-center">Course Detail</Text>
-                        </View>
-                        <TouchableOpacity className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center">
-                            <FontAwesome5 name="shopping-cart" color={"#280e49"} size={15} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
+                <ScreenHeader title={"Course Detail"} returnScreen={'/screens/base/Home'} />
                 {/* section 2 */}
                 <View className="pb-3 w-full p-2 rounded-md">
                     <Image source={require('../../../assets/images/handshake.jpg')} className="h-[200px] w-full rounded-md object-cover" />
