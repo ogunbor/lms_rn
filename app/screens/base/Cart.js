@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -5,6 +6,7 @@ import BottomScreenNavigation from "../partials/BottomScreenNavigation";
 import ScreenHeader from "../partials/ScreenHeader";
 
 const Cart = () => {
+    const router = useRouter();
     const [expanded, setExpanded] = useState(true);
     const handlePress = () => setExpanded(!expanded);
     const [courses, setCourses] = useState([1, 2, 3, 4, 5])
@@ -42,7 +44,7 @@ const Cart = () => {
                     </View>
                 </View>
 
-                <TouchableOpacity className="bg-[#280e49] w-[100%] flex-row justify-center p-2 rounded-md mt-2">
+                <TouchableOpacity onPress={() => router.push('/screens/base/Checkout')} className="bg-[#280e49] w-[100%] flex-row justify-center p-2 rounded-md mt-2">
                     <Text className="text-white" >Proceed To Checkout</Text>
                 </TouchableOpacity>
             </View>
