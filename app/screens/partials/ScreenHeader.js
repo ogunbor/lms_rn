@@ -14,9 +14,12 @@ const ScreenHeader = ({ title, returnScreen }) => {
                 <View>
                     <Text className="text-white text-[17px] font-semibold text-center">{title}</Text>
                 </View>
-                <TouchableOpacity className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center">
-                    <FontAwesome5 name="shopping-cart" color={"#280e49"} size={15} />
-                </TouchableOpacity>
+                {title !== "Successs" && (
+                    <TouchableOpacity className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center">
+                        <FontAwesome5 name="shopping-cart" color={"#280e49"} size={15} />
+                    </TouchableOpacity>
+                )}
+
             </View>
         </View>
     )
