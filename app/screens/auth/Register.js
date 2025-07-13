@@ -2,27 +2,31 @@ import { useRouter } from "expo-router";
 import {
     Image,
     Keyboard,
-    KeyboardAvoidingView,
     Platform,
     ScrollView,
+    StatusBar,
     Text,
     TextInput,
     TouchableOpacity,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    View,
 } from "react-native";
 
 const Register = () => {
     const router = useRouter();
+    const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
-        >
+        <View style={{ flex: 1, backgroundColor: "#F2F2F2", paddingTop: statusBarHeight }}>
+            <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <ScrollView
-                    contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 16, paddingTop: 40, paddingBottom: 20 }}
+                    contentContainerStyle={{
+                        flexGrow: 1,
+                        paddingHorizontal: 16,
+                        paddingBottom: 20,
+                    }}
                     keyboardShouldPersistTaps="handled"
                     showsVerticalScrollIndicator={false}
                 >
@@ -41,10 +45,8 @@ const Register = () => {
 
                     <TextInput
                         placeholder="Full Name"
-                        keyboardType="default"
-                        placeholderTextColor="#888"
                         style={{
-                            backgroundColor: "#e9e9e9a7",
+                            backgroundColor: "#fff",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
                             borderRadius: 8,
@@ -56,9 +58,8 @@ const Register = () => {
                     <TextInput
                         placeholder="Email"
                         keyboardType="email-address"
-                        placeholderTextColor="#888"
                         style={{
-                            backgroundColor: "#e9e9e9a7",
+                            backgroundColor: "#fff",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
                             borderRadius: 8,
@@ -70,9 +71,8 @@ const Register = () => {
                     <TextInput
                         placeholder="Password"
                         secureTextEntry
-                        placeholderTextColor="#888"
                         style={{
-                            backgroundColor: "#e9e9e9a7",
+                            backgroundColor: "#fff",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
                             borderRadius: 8,
@@ -84,14 +84,13 @@ const Register = () => {
                     <TextInput
                         placeholder="Confirm Password"
                         secureTextEntry
-                        placeholderTextColor="#888"
                         style={{
-                            backgroundColor: "#e9e9e9a7",
+                            backgroundColor: "#fff",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
                             borderRadius: 8,
                             padding: 12,
-                            marginBottom: 20,
+                            marginBottom: 16,
                             color: "#2f2f2f",
                         }}
                     />
@@ -102,25 +101,25 @@ const Register = () => {
                             paddingVertical: 14,
                             borderRadius: 8,
                             alignItems: "center",
+                            marginTop: 12,
                         }}
                     >
-                        <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>
-                            Create Account
-                        </Text>
+                        <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>Create Account</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => router.push("/screens/auth/Login")}
-                        style={{ marginTop: 24 }}
+                        style={{ marginTop: 40, marginBottom: 30 }}
                     >
                         <Text style={{ textAlign: "center", color: "#32174D", fontSize: 14 }}>
                             Already have an account?{" "}
                             <Text style={{ textDecorationLine: "underline" }}>Login</Text>
                         </Text>
                     </TouchableOpacity>
+
                 </ScrollView>
             </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+        </View>
     );
 };
 
