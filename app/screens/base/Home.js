@@ -29,7 +29,7 @@ const Home = () => {
                                 <TouchableOpacity className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center mx-auto">
                                     <FontAwesome5 name="bell" color={"#280e49"} size={20} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => router.push('../screens/auth/Login')} className="h-[30px] w-[30px] bg-[#fe3535] rounded-full flex items-center justify-center mx-auto">
+                                <TouchableOpacity onPress={() => router.push('/screens/auth/Login')} className="h-[30px] w-[30px] bg-[#fe3535] rounded-full flex items-center justify-center mx-auto">
                                     <FontAwesome5 name="power-off" color={"#fff"} size={20} />
                                 </TouchableOpacity>
                             </View>
