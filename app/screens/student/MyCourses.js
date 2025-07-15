@@ -1,10 +1,11 @@
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import BottomScreenNavigation from "../partials/BottomScreenNavigation";
 import StudentScreenHeader from "../partials/StudentScreenHeader";
 
-
 const MyCourses = () => {
+    const router = useRouter()
     return (
         <View className="bg-white flex-1 px-3">
             <ScrollView vertical showsVerticalScrollIndicator={false} className="flex-1">
@@ -19,7 +20,10 @@ const MyCourses = () => {
                         <View>
                             <Text className="text-[18px] font-bold"> Python Programming...</Text>
                             <Text className="text-[18px] font-normal mt-1"> 3 sections</Text>
-                            <TouchableOpacity className="bg-[#280e49] gap-2 flex-row w-100 h-7 flex justify-center items-center rounded-md mt-2">
+                            <TouchableOpacity onPress={() => router.push({
+                                pathname: "/screens/student/StudentCourseDetail",
+                                params: { user_id: "1", enrollment_id: "7777785" },
+                            })} className="bg-[#280e49] gap-2 flex-row w-100 h-7 flex justify-center items-center rounded-md mt-2">
                                 <Text className="text-white">Start Now</Text>
                                 <FontAwesome5 name="play" color={"white"} size={12} />
                             </TouchableOpacity>
