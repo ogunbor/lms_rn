@@ -1,4 +1,7 @@
 import { useRouter } from "expo-router";
+import { useState } from "react";
+import { login } from "../../../src/utils/auth";
+import { useDispatch } from "react-redux";
 import {
     Image,
     Keyboard,
@@ -11,13 +14,45 @@ import {
     TouchableWithoutFeedback,
     View
 } from "react-native";
-import { useState } from "react";
+
 import Icon from "react-native-vector-icons/Ionicons";
+import CartId from "../../../src/plugin/CartId";
 
 const Login = () => {
-    const router = useRouter();
+    const [bioData, setBioData] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
+
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+    const handleBioData = (name, value) => {
+        setBioData({
+            ...bioData,
+            [name]: value,
+        });
+    };
+
+    const handleLogin = async () => {
+        setLoading(true);
+
+        try {
+            const { error } = await login(dispatch, bioData.email, bioData.password);
+            if (error) {
+                alert(error.detail);
+                setLoading(false);
+            } else {
+                //console.log("Login Success");
+                setLoading(false);
+                router.push("/screens/base/Home");
+                CartId();
+            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    };
 
     return (
         <KeyboardAvoidingView
@@ -50,6 +85,8 @@ const Login = () => {
                     </Text>
 
                     <TextInput
+                        onChangeText={(text) => handleBioData("email", text)}
+                        value={bioData.email}
                         placeholder="Email"
                         keyboardType="email-address"
                         placeholderTextColor="#888"
@@ -78,6 +115,8 @@ const Login = () => {
                         }}
                     >
                         <TextInput
+                            onChangeText={(text) => handleBioData("password", text)}
+                            value={bioData.password}
                             placeholder="Password"
                             secureTextEntry={!passwordVisible}
                             placeholderTextColor="#888"
@@ -96,16 +135,33 @@ const Login = () => {
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: "#32174D",
-                            paddingVertical: 14,
-                            borderRadius: 30,
-                            alignItems: "center",
-                        }}
-                    >
-                        <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>Login</Text>
-                    </TouchableOpacity>
+                    {loading === true ? (
+                        <TouchableOpacity
+                            disabled
+                            style={{
+                                backgroundColor: "#32174D",
+                                paddingVertical: 14,
+                                borderRadius: 30,
+                                alignItems: "center",
+                                marginTop: 12,
+                            }}
+                        >
+                            <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>Processing...</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={handleLogin}
+                            style={{
+                                backgroundColor: "#32174D",
+                                paddingVertical: 14,
+                                borderRadius: 30,
+                                alignItems: "center",
+                                marginTop: 12,
+                            }}
+                        >
+                            <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>Login</Text>
+                        </TouchableOpacity>
+                    )}
 
                     <TouchableOpacity
                         onPress={() => router.push("/screens/auth/Register")}
