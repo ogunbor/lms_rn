@@ -3,6 +3,8 @@ import { useState } from "react";
 import apiInstance from "../../../src/utils/axios"
 import { login } from "../../../src/utils/auth"
 import { useDispatch } from "react-redux"
+import Icon from "react-native-vector-icons/Ionicons";
+
 import {
     Image,
     Keyboard,
@@ -20,6 +22,9 @@ const Register = () => {
     const router = useRouter();
     const [bioData, setBioData] = useState({ full_name: "", email: "", password: "", password2: "" });
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
+
     const dispatch = useDispatch();
     const handleBioData = (name, value) => {
         setBioData({
@@ -100,7 +105,7 @@ const Register = () => {
                             backgroundColor: "#fff",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
-                            borderRadius: 8,
+                            borderRadius: 30,
                             padding: 12,
                             marginBottom: 16,
                             color: "#2f2f2f",
@@ -115,42 +120,67 @@ const Register = () => {
                             backgroundColor: "#fff",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
-                            borderRadius: 8,
+                            borderRadius: 30,
                             padding: 12,
                             marginBottom: 16,
                             color: "#2f2f2f",
                         }}
                     />
-                    <TextInput
-                        onChangeText={(text) => handleBioData("password", text)}
-                        value={bioData.password}
-                        placeholder="Password"
-                        secureTextEntry
-                        style={{
-                            backgroundColor: "#fff",
-                            borderColor: "#e8e8e8",
-                            borderWidth: 1,
-                            borderRadius: 8,
-                            padding: 12,
-                            marginBottom: 16,
-                            color: "#2f2f2f",
-                        }}
-                    />
-                    <TextInput
-                        onChangeText={(text) => handleBioData("password2", text)}
-                        value={bioData.password2}
-                        placeholder="Confirm Password"
-                        secureTextEntry
-                        style={{
-                            backgroundColor: "#fff",
-                            borderColor: "#e8e8e8",
-                            borderWidth: 1,
-                            borderRadius: 8,
-                            padding: 12,
-                            marginBottom: 16,
-                            color: "#2f2f2f",
-                        }}
-                    />
+
+                    <View style={{ position: "relative", marginBottom: 16 }}>
+                        <TextInput
+                            onChangeText={(text) => handleBioData("password", text)}
+                            value={bioData.password}
+                            placeholder="Password"
+                            secureTextEntry={!showPassword}
+                            style={{
+                                backgroundColor: "#fff",
+                                borderColor: "#e8e8e8",
+                                borderWidth: 1,
+                                borderRadius: 30,
+                                padding: 12,
+                                paddingRight: 45,
+                                color: "#2f2f2f",
+                            }}
+                        />
+                        <TouchableOpacity
+                            onPress={() => setShowPassword(!showPassword)}
+                            style={{
+                                position: "absolute",
+                                right: 15,
+                                top: 12,
+                            }}
+                        >
+                            <Icon name={showPassword ? "eye-off" : "eye"} size={20} color="#32174D" />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ position: "relative", marginBottom: 20 }}>
+                        <TextInput
+                            onChangeText={(text) => handleBioData("password2", text)}
+                            value={bioData.password2}
+                            placeholder="Confirm Password"
+                            secureTextEntry={!showPassword2}
+                            style={{
+                                backgroundColor: "#fff",
+                                borderColor: "#e8e8e8",
+                                borderWidth: 1,
+                                borderRadius: 30,
+                                padding: 12,
+                                paddingRight: 45,
+                                color: "#2f2f2f",
+                            }}
+                        />
+                        <TouchableOpacity
+                            onPress={() => setShowPassword2(!showPassword2)}
+                            style={{
+                                position: "absolute",
+                                right: 15,
+                                top: 12,
+                            }}
+                        >
+                            <Icon name={showPassword2 ? "eye-off" : "eye"} size={20} color="#32174D" />
+                        </TouchableOpacity>
+                    </View>
 
                     {loading === true ? (
                         <TouchableOpacity
@@ -159,7 +189,7 @@ const Register = () => {
                             style={{
                                 backgroundColor: "#32174D",
                                 paddingVertical: 14,
-                                borderRadius: 8,
+                                borderRadius: 30,
                                 alignItems: "center",
                                 marginTop: 12,
                             }}
@@ -172,7 +202,7 @@ const Register = () => {
                             style={{
                                 backgroundColor: "#32174D",
                                 paddingVertical: 14,
-                                borderRadius: 8,
+                                borderRadius: 30,
                                 alignItems: "center",
                                 marginTop: 12,
                             }}

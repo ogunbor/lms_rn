@@ -8,11 +8,16 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    View
 } from "react-native";
+import { useState } from "react";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Login = () => {
     const router = useRouter();
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
 
     return (
         <KeyboardAvoidingView
@@ -22,7 +27,12 @@ const Login = () => {
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <ScrollView
-                    contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 16, paddingTop: 40, paddingBottom: 20 }}
+                    contentContainerStyle={{
+                        flexGrow: 1,
+                        paddingHorizontal: 16,
+                        paddingTop: 40,
+                        paddingBottom: 20
+                    }}
                     keyboardShouldPersistTaps="handled"
                     showsVerticalScrollIndicator={false}
                 >
@@ -47,32 +57,50 @@ const Login = () => {
                             backgroundColor: "#e9e9e9a7",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
-                            borderRadius: 8,
+                            borderRadius: 30,
                             padding: 12,
                             marginBottom: 16,
                             color: "#2f2f2f",
                         }}
                     />
-                    <TextInput
-                        placeholder="Password"
-                        secureTextEntry
-                        placeholderTextColor="#888"
+
+                    {/* Password Field with Icon */}
+                    <View
                         style={{
+                            flexDirection: "row",
+                            alignItems: "center",
                             backgroundColor: "#e9e9e9a7",
                             borderColor: "#e8e8e8",
                             borderWidth: 1,
-                            borderRadius: 8,
-                            padding: 12,
-                            marginBottom: 20,
-                            color: "#2f2f2f",
+                            borderRadius: 30,
+                            paddingHorizontal: 12,
+                            marginBottom: 35,
                         }}
-                    />
+                    >
+                        <TextInput
+                            placeholder="Password"
+                            secureTextEntry={!passwordVisible}
+                            placeholderTextColor="#888"
+                            style={{
+                                flex: 1,
+                                paddingVertical: 12,
+                                color: "#2f2f2f",
+                            }}
+                        />
+                        <TouchableOpacity onPress={togglePasswordVisibility}>
+                            <Icon
+                                name={passwordVisible ? "eye-off" : "eye"}
+                                size={20}
+                                color="#32174D"
+                            />
+                        </TouchableOpacity>
+                    </View>
 
                     <TouchableOpacity
                         style={{
                             backgroundColor: "#32174D",
                             paddingVertical: 14,
-                            borderRadius: 8,
+                            borderRadius: 30,
                             alignItems: "center",
                         }}
                     >
