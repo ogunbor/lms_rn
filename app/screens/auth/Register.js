@@ -1,4 +1,8 @@
 import { useRouter } from "expo-router";
+import { useState } from "react";
+import apiInstance from "../../../src/utils/axios"
+import { login } from "../../../src/utils/auth"
+import { useDispatch } from "react-redux"
 import {
     Image,
     Keyboard,
@@ -14,6 +18,51 @@ import {
 
 const Register = () => {
     const router = useRouter();
+    const [bioData, setBioData] = useState({ full_name: "", email: "", password: "", password2: "" });
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const handleBioData = (name, value) => {
+        setBioData({
+            ...bioData,
+            [name]: value,
+        });
+    };
+
+    const handleRegister = async () => {
+        setLoading(true);
+
+        try {
+            const userData = {
+                full_name: bioData.full_name,
+                email: bioData.email,
+                password: bioData.password,
+                password2: bioData.password2,
+            };
+            const response = await apiInstance.post(`user/register/`, userData);
+
+            if (response.status === 201) {
+                // console.log("No error########", response.data);
+                const { error } = await login(dispatch, bioData.email, bioData.password);
+                if (error) {
+                } else {
+                    // console.log("Login successs ######");
+                    router.push("/screens/base/Home");
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+
+            if (error.response.data.email) {
+                alert(error.response.data.email);
+            }
+
+            if (error.response.data.password) {
+                alert(error.response.data.password);
+            }
+        }
+    };
+
     const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
 
     return (
@@ -44,6 +93,8 @@ const Register = () => {
                     </Text>
 
                     <TextInput
+                        onChangeText={(text) => handleBioData("full_name", text)}
+                        value={bioData.full_name}
                         placeholder="Full Name"
                         style={{
                             backgroundColor: "#fff",
@@ -56,6 +107,8 @@ const Register = () => {
                         }}
                     />
                     <TextInput
+                        onChangeText={(text) => handleBioData("email", text)}
+                        value={bioData.email}
                         placeholder="Email"
                         keyboardType="email-address"
                         style={{
@@ -69,6 +122,8 @@ const Register = () => {
                         }}
                     />
                     <TextInput
+                        onChangeText={(text) => handleBioData("password", text)}
+                        value={bioData.password}
                         placeholder="Password"
                         secureTextEntry
                         style={{
@@ -82,6 +137,8 @@ const Register = () => {
                         }}
                     />
                     <TextInput
+                        onChangeText={(text) => handleBioData("password2", text)}
+                        value={bioData.password2}
                         placeholder="Confirm Password"
                         secureTextEntry
                         style={{
@@ -95,17 +152,35 @@ const Register = () => {
                         }}
                     />
 
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: "#32174D",
-                            paddingVertical: 14,
-                            borderRadius: 8,
-                            alignItems: "center",
-                            marginTop: 12,
-                        }}
-                    >
-                        <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>Create Account</Text>
-                    </TouchableOpacity>
+                    {loading === true ? (
+                        <TouchableOpacity
+                            disabled
+                            onPress={handleRegister}
+                            style={{
+                                backgroundColor: "#32174D",
+                                paddingVertical: 14,
+                                borderRadius: 8,
+                                alignItems: "center",
+                                marginTop: 12,
+                            }}
+                        >
+                            <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>Processing...</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={handleRegister}
+                            style={{
+                                backgroundColor: "#32174D",
+                                paddingVertical: 14,
+                                borderRadius: 8,
+                                alignItems: "center",
+                                marginTop: 12,
+                            }}
+                        >
+                            <Text style={{ color: "white", fontWeight: "bold", fontSize: 16 }}>Create Account</Text>
+                        </TouchableOpacity>
+                    )}
+
 
                     <TouchableOpacity
                         onPress={() => router.push("/screens/auth/Login")}
