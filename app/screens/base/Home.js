@@ -7,7 +7,7 @@ import BottomScreenNavigation from "../partials/BottomScreenNavigation";
 import { logout } from "../../../src/utils/auth"
 import { useDispatch } from "react-redux";
 import apiInstance from "../../../src/utils/axios";
-import CryptoIcon from 'react-native-crypto-icons';
+
 
 
 
@@ -156,7 +156,10 @@ const Home = () => {
                                                     </View>
 
                                                     <View className="flex-row items-center gap-2">
-                                                        <TouchableOpacity className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
+                                                        <TouchableOpacity
+                                                            onPress={() => router.push(`/screens/base/CourseDetail/${t?.slug}`)}
+                                                            className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2"
+                                                        >
                                                             <Text className="text-white">View Course</Text>
                                                         </TouchableOpacity>
                                                         <TouchableOpacity className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
