@@ -19,7 +19,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import CartId from "../../../src/plugin/CartId";
 
 const Login = () => {
-    const [bioData, setBioData] = useState({ email: "", password: "" });
+    const [bioData, setBioData] = useState({ email: "jerrycharja@gmail.com", password: "Testing321" });
     const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
