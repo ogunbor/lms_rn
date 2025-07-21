@@ -7,6 +7,9 @@ import BottomScreenNavigation from "../partials/BottomScreenNavigation";
 import { logout } from "../../../src/utils/auth"
 import { useDispatch } from "react-redux";
 import apiInstance from "../../../src/utils/axios";
+import CryptoIcon from 'react-native-crypto-icons';
+
+
 
 const Home = () => {
     const [trendingCourses, setTrendingCourses] = useState([]);
@@ -146,8 +149,12 @@ const Home = () => {
                                                             : `${t?.rating_count} ${t?.rating_count === 1 ? 'review' : 'reviews'}`}
                                                     </Text>
                                                 </View>
-                                                <View className="flex-row justify-between items-center mt-3">
-                                                    <Text className="text-[18px] font-bold mt-3">{t?.price / 1000} sol</Text>
+                                                <View className="flex-row justify-between items-center">
+                                                    <View className="flex-row items-center gap-0.5">
+                                                        <Text className="text-[18px] font-bold">{t?.price / 1000}</Text>
+                                                        <Image source={require('../../../assets/images/solana.png')} />
+                                                    </View>
+
                                                     <View className="flex-row items-center gap-2">
                                                         <TouchableOpacity className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
                                                             <Text className="text-white">View Course</Text>
@@ -199,7 +206,11 @@ const Home = () => {
                                             <Text>2 reviews</Text>
                                         </View>
                                         <View className="flex-row justify-between items-center mt-3">
-                                            <Text className="text-[18px] font-bold mt-3">{t?.price / 1000} sol</Text>
+                                            <View className="flex-row items-center gap-0.5">
+                                                <Text className="text-[18px] font-bold">{t?.price / 1000}</Text>
+                                                <Image source={require('../../../assets/images/solana.png')} />
+                                            </View>
+
                                             <View className="flex-row items-center gap-2">
                                                 <TouchableOpacity onPress={() => router.push('/screens/base/CourseDetail')} className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
                                                     <Text className="text-white">View Course</Text>
