@@ -10,23 +10,44 @@ import apiInstance from "../../../../src/utils/axios";
 import moment from "moment";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useVideoPlayer, VideoView } from 'expo-video';
+import useUserData from "../../../../src/plugin/useUserData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CourseDetail = () => {
     const [expanded, setExpanded] = useState(true);
-    const handlePress = () => setExpanded(!expanded);
-    const [course, setCourse] = useState([]);
+    const [course, setCourse] = useState({});
     const { course_slug } = useLocalSearchParams();
+    const [cartId, setCartId] = useState("");
     const refRBSheet = useRef();
+    const user_id = useUserData();
     const video = useRef(null);
     const [status, setStatus] = useState({});
     const [selectedVariantItem, setSelectedVariantItem] = useState({ title: "", video: "", content_duration: "" });
 
     const fetchCourse = async () => {
         try {
+            const cart_id = await AsyncStorage.getItem("randomString");
+            setCartId(cart_id);
             const response = await apiInstance.get(`course/course-detail/${course_slug}/`);
             setCourse(response.data);
         } catch (error) {
-            console.log(error);
+            console.log("Error fetching course:", error);
+        }
+    };
+
+    const addToCart = async (courseId, userId, price, country, cartId) => {
+        try {
+            const payload = {
+                course_id: courseId,
+                user: userId,
+                price,
+                country,
+                cart_id: cartId,
+            };
+            await apiInstance.post(`cart/create/`, payload);
+            alert("Added to cart");
+        } catch (error) {
+            console.log("Error adding to cart:", error);
         }
     };
 
@@ -51,31 +72,38 @@ const CourseDetail = () => {
                 <View className="bg-[#280e49] rounded-2xl mb-4 text-center">
                     <ScreenHeader title="Course Detail" returnScreen={'/screens/base/Home'} />
                 </View>
-                <View className="pb-3 w-full p-2 rounded-md">
-                    <Image source={{ uri: course.image }} className="h-[200px] w-full rounded-md object-cover" />
 
-                    <Text className="text-[20px] text-[#280e49] font-semibold mt-2">{course.title}</Text>
+                <View className="pb-3 w-full p-2 rounded-md">
+                    {course?.image && (
+                        <Image source={{ uri: course.image }} className="h-[200px] w-full rounded-md object-cover" />
+                    )}
+
+                    <Text className="text-[20px] text-[#280e49] font-semibold mt-2">{course?.title}</Text>
 
                     <View className="py-2">
-                        <Text className="text-[15px] text-[#280e49] font-normal">{course.description}</Text>
+                        <Text className="text-[15px] text-[#280e49] font-normal">{course?.description}</Text>
                     </View>
 
                     <View className="flex-row items-center gap-1 mt-1">
                         <Text>{course?.average_rating || 0}/5</Text>
                         <View className="flex-row items-center ml-2">{renderStars(course?.average_rating)}</View>
-                        <Text className="ml-2">{course?.rating_count} review{course?.rating_count?.length > 1 ? "s" : ""}</Text>
+                        <Text className="ml-2">{course?.rating_count} review{course?.rating_count > 1 ? "s" : ""}</Text>
                     </View>
 
                     <Text className="text-[15px] mt-4">Created By: <Text className="font-bold">Jerry Charja</Text></Text>
                     <Text className="text-[15px] mt-1">Date Published: <Text className="font-bold">{moment(course?.date).format("DD MMM, YYYY")}</Text></Text>
                     <Text className="text-[15px] mt-1">Language: <Text className="font-bold">{course?.language}</Text></Text>
 
-                    <TouchableOpacity className="bg-[#280e49] rounded-md w-30 flex-row mt-5 items-center justify-center p-3">
+                    <TouchableOpacity
+                        onPress={() => addToCart(course?.id, user_id, course?.price, "Nigeria", cartId)}
+                        className="bg-[#280e49] rounded-md w-30 flex-row mt-5 items-center justify-center p-3"
+                    >
                         <Text className="text-white mr-3">Add to Cart</Text>
                         <FontAwesome5 name="shopping-cart" color={"#fff"} size={15} />
                     </TouchableOpacity>
 
                     <Text className="font-bold text-[20px] mt-10">Course Content</Text>
+
                     <List.Section>
                         {course?.variant?.map((v, index) => (
                             <List.Accordion
@@ -109,16 +137,15 @@ const CourseDetail = () => {
                         </View>
                     ))}
                 </View>
-
             </ScrollView>
 
             <BottomScreenNavigation />
 
             <RBSheet
                 ref={refRBSheet}
-                closeOnDragDown={true}
-                closeOnPressMask={true}
-                dragFromTopOnly={true}
+                closeOnDragDown
+                closeOnPressMask
+                dragFromTopOnly
                 height={300}
                 customStyles={{
                     wrapper: { backgroundColor: "#00000077" },
@@ -129,21 +156,23 @@ const CourseDetail = () => {
                 <Text className="text-center font-bold text-[16px]">
                     {selectedVariantItem?.title} - {selectedVariantItem?.content_duration}
                 </Text>
+
+                {/* Uncomment and configure if video playback is working */}
                 {/* <View style={styles.container}>
-                    {selectedVariantItem?.video ? (
-                        <Video
-                            ref={video}
-                            style={styles.video}
-                            source={{ uri: selectedVariantItem?.video }}
-                            useNativeControls
-                            resizeMode={ResizeMode.CONTAIN}
-                            isLooping
-                            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-                        />
-                    ) : (
-                        <Text className="text-center mt-5 text-gray-500">No preview available.</Text>
-                    )}
-                </View> */}
+          {selectedVariantItem?.video ? (
+            <Video
+              ref={video}
+              style={styles.video}
+              source={{ uri: selectedVariantItem?.video }}
+              useNativeControls
+              resizeMode={ResizeMode.CONTAIN}
+              isLooping
+              onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+            />
+          ) : (
+            <Text className="text-center mt-5 text-gray-500">No preview available.</Text>
+          )}
+        </View> */}
             </RBSheet>
         </View>
     );

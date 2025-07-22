@@ -7,15 +7,17 @@ import BottomScreenNavigation from "../partials/BottomScreenNavigation";
 import { logout } from "../../../src/utils/auth"
 import { useDispatch } from "react-redux";
 import apiInstance from "../../../src/utils/axios";
-
-
+import useUserData from "../../../src/plugin/useUserData"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Home = () => {
     const [trendingCourses, setTrendingCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [cartId, setCartId] = useState("");
     const router = useRouter();
     const dispatch = useDispatch()
+    const user_id = useUserData()
 
     const logoutUser = async () => {
         logout(dispatch);
@@ -23,6 +25,10 @@ const Home = () => {
     }
 
     const fetchCourses = async () => {
+        const cart_id = await AsyncStorage.getItem("randomString");
+        setCartId(cart_id);
+
+
         setLoading(true);
         try {
             const response = await apiInstance.get(`course/course-list/`);
@@ -31,6 +37,22 @@ const Home = () => {
             setLoading(false);
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const addToCart = async (courseId, userId, price, country, cartId) => {
+        try {
+            const payload = {
+                course_id: courseId,
+                user: userId,
+                price,
+                country,
+                cart_id: cartId,
+            };
+            await apiInstance.post(`cart/create/`, payload);
+            alert("Added to cart");
+        } catch (error) {
+            console.log("Error adding to cart:", error);
         }
     };
 
@@ -162,7 +184,7 @@ const Home = () => {
                                                         >
                                                             <Text className="text-white">View Course</Text>
                                                         </TouchableOpacity>
-                                                        <TouchableOpacity className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
+                                                        <TouchableOpacity onPress={() => addToCart(t?.id, user_id, t?.price, "Nigeria", cartId)} className="bg-[#280e49] rounded-md w-30 flex items-center justify-center p-2">
                                                             <FontAwesome5 name="shopping-cart" color={"#fff"} size={15} />
                                                         </TouchableOpacity>
                                                     </View>
