@@ -81,7 +81,7 @@ const Home = () => {
                                 </View>
                             </View>
                             <View className="flex-row items-center gap-2">
-                                <TouchableOpacity className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center mx-auto">
+                                <TouchableOpacity onPress={() => router.push('/screens/base/Cart')} className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center mx-auto">
                                     <FontAwesome5 name="shopping-cart" color={"#280e49"} size={20} />
                                 </TouchableOpacity>
                                 <TouchableOpacity className="h-[30px] w-[30px] bg-white rounded-full flex items-center justify-center mx-auto">
