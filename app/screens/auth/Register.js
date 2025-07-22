@@ -33,6 +33,26 @@ const Register = () => {
         });
     };
 
+    const generateCartId = async () => {
+        const generateRandomString = async () => {
+            const length = 30;
+            const characters = "abcdefghiklmnopqrstuvwxzy1234567890";
+            let randomString = "";
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                randomString += characters.charAt(randomIndex);
+            }
+            await AsyncStorage.setItem("randomString", randomString);
+        };
+
+        const existingRandomString = await AsyncStorage.getItem("randomString");
+        console.log("existingRandomString =====", existingRandomString);
+        if (!existingRandomString) {
+            generateRandomString();
+        }
+    };
+
     const handleRegister = async () => {
         setLoading(true);
 
@@ -52,6 +72,7 @@ const Register = () => {
                 } else {
                     // console.log("Login successs ######");
                     router.push("/screens/base/Home");
+                    generateCartId();
                 }
             }
         } catch (error) {

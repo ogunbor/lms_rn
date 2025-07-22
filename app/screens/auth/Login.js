@@ -17,6 +17,7 @@ import {
 
 import Icon from "react-native-vector-icons/Ionicons";
 import CartId from "../../../src/plugin/CartId";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
     const [bioData, setBioData] = useState({ email: "jerrycharja@gmail.com", password: "Testing321" });
@@ -34,6 +35,26 @@ const Login = () => {
         });
     };
 
+    const generateCartId = async () => {
+        const generateRandomString = async () => {
+            const length = 30;
+            const characters = "abcdefghiklmnopqrstuvwxzy1234567890";
+            let randomString = "";
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                randomString += characters.charAt(randomIndex);
+            }
+            await AsyncStorage.setItem("randomString", randomString);
+        };
+
+        const existingRandomString = await AsyncStorage.getItem("randomString");
+        console.log("existingRandomString =====", existingRandomString);
+        if (!existingRandomString) {
+            generateRandomString();
+        }
+    };
+
     const handleLogin = async () => {
         setLoading(true);
 
@@ -47,6 +68,7 @@ const Login = () => {
                 setLoading(false);
                 router.push("/screens/base/Home");
                 CartId();
+                generateCartId();
             }
         } catch (error) {
             console.log(error);
