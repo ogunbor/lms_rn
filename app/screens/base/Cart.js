@@ -1,17 +1,34 @@
 import { useRouter } from "expo-router";
 import { useState, useEffect } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View, ActivityIndicator } from "react-native";
+import {
+    Image,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View,
+    ActivityIndicator,
+} from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import BottomScreenNavigation from "../partials/BottomScreenNavigation";
 import ScreenHeader from "../partials/ScreenHeader";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiInstance from "../../../src/utils/axios";
+import { Connection, PublicKey } from '@solana/web3.js';
+import { Base64EncodedAddress } from '@solana-mobile/mobile-wallet-adapter-protocol';
+import { toUint8Array } from 'js-base64';
+import ConnectButton from '../../../src/components/ConnectButton';
+import DisconnectButton from "../../../src/components/DisconnectButton";
 
 const Cart = () => {
     const router = useRouter();
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState([]);
     const [cartStats, setCartStats] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState('');
+    const [authorization, setAuthorization] = useState(null);
+
+    // ✅ Create Solana connection for mobile
+    const connection = new Connection('https://api.devnet.solana.com');
 
     const fetchCartItems = async () => {
         const cart_id = await AsyncStorage.getItem("randomString");
@@ -44,6 +61,7 @@ const Cart = () => {
                 <View className="bg-[#280e49] rounded-2xl mb-3">
                     <ScreenHeader title={"Cart"} returnScreen={'/screens/base/Home'} />
                 </View>
+
                 {loading ? (
                     <View>
                         <ActivityIndicator size={"large"} color={"#280e49"} />
@@ -72,8 +90,8 @@ const Cart = () => {
                         {cart?.length < 1 && <Text className="mt-5 ml-4">Empty Cart</Text>}
                     </View>
                 )}
-
             </ScrollView>
+
             <View>
                 <View className="bg-gray-200 p-2 rounded-md mt-2 mb-3">
                     <Text className="text-[18px] font-semibold mb-4"> Summary</Text>
@@ -91,15 +109,27 @@ const Cart = () => {
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={() => router.push('/screens/base/Checkout')} className="bg-[#280e49] w-[100%] flex-row justify-center p-2 rounded-md mt-2">
-                    <Text className="text-white py-1.5" >Proceed To Checkout</Text>
-                </TouchableOpacity>
+                {/* ✅ Connect or Disconnect wallet */}
+                {authorization === null ? (
+                    <ConnectButton
+                        onConnect={async (authorization) => {
+                            setAuthorization(authorization);
+                            // router.push('/screens/base/Checkout');
+                        }}
+                        label="Connect wallet to pay"
+                    />
+                ) : (
+                    <DisconnectButton
+                        authorization={authorization}
+                        onDisconnect={() => setAuthorization(null)}
+                    />
+                )}
             </View>
 
             {/* Bottom Navigation */}
             <BottomScreenNavigation />
         </View>
     );
-}
+};
 
-export default Cart
+export default Cart;
