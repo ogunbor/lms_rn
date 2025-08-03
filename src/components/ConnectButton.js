@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
-import { getPublicKeyFromAddress } from '../../app/screens/base/Cart.js';
+import { getPublicKeyFromAddress } from '../utils/solana.js';
+
 
 export const APP_IDENTITY = {
     name: 'lms_RN',

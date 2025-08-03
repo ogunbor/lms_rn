@@ -1,4 +1,17 @@
-// index.js
+// Add this workaround for Hermes JS engine not supporting Event
+if (global.Event === undefined) {
+    class Event {
+        constructor(type, params = {}) {
+            this.type = type;
+            this.bubbles = !!params.bubbles;
+            this.cancelable = !!params.cancelable;
+        }
+    }
+    global.Event = Event;
+}
+
+
+
 import { Buffer } from "buffer";
 import { getRandomValues as expoCryptoGetRandomValues } from "expo-crypto";
 global.Buffer = Buffer;

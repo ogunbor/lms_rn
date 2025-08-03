@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://gentle-laws-scream.loca.lt/api/v1";
+export const API_BASE_URL = "https://e2fb9cad6f43.ngrok-free.app/api/v1";
