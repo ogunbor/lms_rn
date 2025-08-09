@@ -19,20 +19,23 @@ Vdemy is a Learning Management System built with React Native
 3. Open a new terminal, then cd into backend.
 
 
-4.   ```bash
-   .\venv\Scripts\activate   to create a virtual environment
+4. Create a virtual environment
+    ```bash
+   .\venv\Scripts\activate 
    ```
 
-5.  ```bash
+5.  Run server
+```bash
    python manage.py runserver  
    ```
 
-6. Using Ngrok: ```bash
+6. Using Ngrok:
+  ```bash
    ngrok http 8000 
    ```
 
-7. In mobile/src/utils/constants.js    replace the url with provided from ngrok
+9. In mobile/src/utils/constants.js    replace the url with provided from ngrok
 
-8. Go back to first terminal and refresh the app by clicking "r"
+10. Go back to first terminal and refresh the app by clicking "r"
 
 
