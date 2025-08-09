@@ -1,10 +1,10 @@
-# Welcome to your Expo app 👋
+# Herein lies Vdemy 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Vdemy is a Learning Management System built with React Native
 
 ## Get started
 
-1. Install dependencies
+1. There are two folders: backend and mobile. cd into mobile, then:
 
    ```bash
    npm install
@@ -15,36 +15,24 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
    npx expo start
    ```
+   
+3. Open a new terminal, then cd into backend.
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+4.   ```bash
+   .\venv\Scripts\activate   to create a virtual environment
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+5.  ```bash
+   python manage.py runserver  
+   ```
 
-## Get a fresh project
+6. Using Ngrok: ```bash
+   ngrok http 8000 
+   ```
 
-When you're ready, run:
+7. In mobile/src/utils/constants.js    replace the url with provided from ngrok
 
-```bash
-npm run reset-project
-```
+8. Go back to first terminal and refresh the app by clicking "r"
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
